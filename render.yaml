@@ -6,12 +6,12 @@ services:
   - type: web
     name: teloapp-backend
     plan: free
-    runtime: docker      # <--- CAMBIO CLAVE
-    dockerfilePath: ./teloapp-backend/Dockerfile # <--- CAMBIO CLAVE
+    runtime: docker
+    dockerfilePath: ./Dockerfile # <--- CAMBIO CLAVE
     envVars:
       - key: SPRING_DATASOURCE_URL
         fromDatabase:
           name: teloapp-db
-          property: connectionString # <-- Nombre corregido
+          property: connectionString
       - key: SPRING_JPA_HIBERNATE_DDL_AUTO
         value: update
