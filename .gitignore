@@ -1,0 +1,9 @@
+# Ignorar carpetas de dependencias y compilación
+/teloapp-backend/target/
+/teloapp_react/node_modules/
+/teloapp_react/dist/
+
+# Ignorar archivos de IDE y sistema operativo
+.idea/
+*.iml
+.DS_Store
