@@ -19,9 +19,15 @@ COPY mvnw .
 COPY mvnw.cmd .
 
 # Ejecuta la construcción con Maven Wrapper
-# -DskipTests para saltar los tests y acelerar el build
+# ... otras líneas de COPY ...
+
+# Asegúrate de que el script del Maven Wrapper sea ejecutable
+RUN chmod +x mvnw
+ 
+# Ejecuta la construcción con Maven Wrapper
 RUN ./mvnw clean package -DskipTests
 
+# ... el resto de tu Dockerfile ...
 # Etapa 2: Crear la imagen final ligera
 # Usa una imagen JRE (solo entorno de ejecución) para reducir el tamaño
 FROM eclipse-temurin:17-jre-alpine
