@@ -1,4 +1,4 @@
-package com.teloapp.teloappbackend;
+package com.teloapp.teloapp_backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
