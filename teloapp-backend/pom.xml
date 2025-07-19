@@ -27,8 +27,9 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>17</java.version>
-	</properties>
+    <java.version>17</java.version>
+    <start-class>com.teloapp.teloappbackend.TeloappBackendApplication</start-class>
+</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
