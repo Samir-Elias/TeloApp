@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Profile;
 
 @SpringBootApplication
-public class TeloappBackendApplication implements CommandLineRunner { // 1. Implementamos CommandLineRunner
+@Profile("dev") // 0. ¡Añadimos esta línea!
+public class TeloappBackendApplication implements CommandLineRunner {
 
     @Autowired // 2. Inyectamos el repositorio para poder usarlo
     private MotelRepository motelRepository;
