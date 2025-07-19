@@ -7,22 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Profile;
+// import org.springframework.context.annotation.Profile; // Ya no necesitas este import si quitas la línea de @Profile
 
 @SpringBootApplication
-@Profile("dev") // 0. ¡Añadimos esta línea!
+// @Profile("dev") // ¡Eliminada!
 public class TeloappBackendApplication implements CommandLineRunner {
 
-    @Autowired // 2. Inyectamos el repositorio para poder usarlo
+    @Autowired
     private MotelRepository motelRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(TeloappBackendApplication.class, args);
     }
 
-    @Override // 3. Este método se ejecutará automáticamente al iniciar la app
+    @Override
     public void run(String... args) throws Exception {
-        
         // Limpiamos la base de datos por si acaso (opcional)
         motelRepository.deleteAll();
 
@@ -42,7 +41,7 @@ public class TeloappBackendApplication implements CommandLineRunner {
         motel2.setLongitude(-68.859);
         motel2.setPhone("261-123-4567");
         motel2.setDescription("El escape perfecto cerca del Parque General San Martín.");
-        motel2.setVerified(true); // Hacemos que uno esté verificado
+        motel2.setVerified(true);
 
         // Guardamos los moteles en la base de datos
         motelRepository.save(motel1);
