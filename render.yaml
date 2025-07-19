@@ -1,23 +1,17 @@
 databases:
-  # Define la base de datos PostgreSQL
   - name: teloapp-db
     plan: free
 
 services:
-  # Define el servicio web del backend
   - type: web
     name: teloapp-backend
-    runtime: java
     plan: free
-    rootDir: teloapp-backend
-    buildCommand: "./mvnw clean install"
-    startCommand: "java -jar target/teloapp-backend-0.0.1-SNAPSHOT.jar"
+    runtime: docker      # <--- CAMBIO CLAVE
+    dockerfilePath: ./teloapp-backend/Dockerfile # <--- CAMBIO CLAVE
     envVars:
-      # Conecta el backend con la base de datos
       - key: SPRING_DATASOURCE_URL
         fromDatabase:
           name: teloapp-db
-          property: internalConnectionString
-      # Le dice a Spring que cree/actualice las tablas automáticamente
+          property: connectionString # <-- Nombre corregido
       - key: SPRING_JPA_HIBERNATE_DDL_AUTO
         value: update
