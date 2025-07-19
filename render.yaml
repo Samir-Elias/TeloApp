@@ -1,0 +1,25 @@
+services:
+  # Base de Datos PostgreSQL
+  - type: pserv
+    name: teloapp-db
+    plan: free
+    databaseName: teloapp_db
+    user: teloapp_user
+    postgresMajorVersion: 14
+
+  # Backend de Spring Boot (Java)
+  - type: web
+    name: teloapp-backend
+    plan: free
+    runtime: java
+    rootDir: teloapp-backend
+    buildCommand: "./mvnw clean install"
+    startCommand: "java -jar target/teloapp-backend-0.0.1-SNAPSHOT.jar"
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        fromService:
+          type: pserv
+          name: teloapp-db
+          property: connectionString
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: update
