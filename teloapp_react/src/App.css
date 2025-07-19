@@ -1,0 +1,42 @@
+/* Contenedor principal de la aplicación */
+.app-container {
+  display: flex; /* Activa Flexbox */
+  width: 100vw;
+  height: 100vh;
+  font-family: sans-serif;
+}
+
+/* Barra lateral */
+.sidebar {
+  width: 350px; /* Ancho fijo para la barra lateral */
+  padding: 1rem;
+  overflow-y: auto; /* Permite scroll si la lista es muy larga */
+  border-right: 1px solid #ccc;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.sidebar h2 {
+  margin-top: 0;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 0.8rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  border: 1px solid #eee;
+}
+
+.sidebar li:hover {
+  background-color: #f0f0f0;
+}
+
+/* Contenedor del mapa */
+.map-container {
+  flex-grow: 1; /* El mapa ocupa todo el espacio restante */
+}
