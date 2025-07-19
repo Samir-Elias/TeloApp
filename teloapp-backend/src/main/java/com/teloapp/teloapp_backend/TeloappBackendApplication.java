@@ -1,7 +1,7 @@
-package com.teloapp.teloapp_backend;
+package com.teloapp.teloappbackend;
 
-import com.teloapp.teloapp_backend.models.Motel;
-import com.teloapp.teloapp_backend.repositories.MotelRepository;
+import com.teloapp.teloappbackend.models.Motel;
+import com.teloapp.teloappbackend.repositories.MotelRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
