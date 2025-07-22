@@ -10,7 +10,12 @@ import Navbar from './components/Navbar.jsx';
 
 import './App.css';
 
-const API_BASE_URL = 'https://teloapp-backend.onrender.com'; // URL del backend en Render
+// --- CAMBIO CLAVE ---
+// La URL del backend ahora es dinámica. Usará localhost para desarrollo
+// y la URL de Render para producción.
+const API_BASE_URL = import.meta.env.DEV 
+  ? 'http://localhost:8080' 
+  : 'https://teloapp-backend.onrender.com';
 
 function App() {
   const [motels, setMotels] = useState([]);
