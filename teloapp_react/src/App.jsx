@@ -3,10 +3,10 @@ import { useJsApiLoader } from '@react-google-maps/api';
 import axios from 'axios';
 
 // Importar los nuevos componentes
-import MapComponent from './components/MapComponent';
-import MotelListComponent from './components/MotelListComponent';
-import MotelDetailView from './components/MotelDetailView';
-import Navbar from './components/Navbar';
+import MapComponent from './components/MapComponent.jsx';
+import MotelListComponent from './components/MotelListComponent.jsx';
+import MotelDetailView from './components/MotelDetailView.jsx';
+import Navbar from './components/Navbar.jsx';
 
 import './App.css';
 
