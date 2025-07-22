@@ -14,4 +14,4 @@ services:
           name: teloapp-db
           property: connectionString
       - key: SPRING_JPA_HIBERNATE_DDL_AUTO
-        value: update
+        value: create-drop

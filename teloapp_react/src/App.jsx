@@ -22,7 +22,6 @@ function App() {
   const [selectedMotel, setSelectedMotel] = useState(null);
   const [activeView, setActiveView] = useState('map'); // 'map', 'list', o 'detail'
   
-  // 1. Estado unificado para todos los filtros
   const [filters, setFilters] = useState({
     searchTerm: '',
     showOpenOnly: false,
@@ -37,15 +36,15 @@ function App() {
   });
 
   useEffect(() => {
+    // La llamada a la API ahora usa la URL dinámica
     axios.get(`${API_BASE_URL}/api/motels`)
       .then(response => setMotels(response.data))
       .catch(error => {
         console.error('Error al obtener los datos de moteles:', error);
-        alert("Error al cargar los moteles. Revisa la consola para más detalles.");
+        alert("Error al cargar los moteles. Asegúrate de que el backend esté corriendo en localhost:8080 y revisa la consola.");
       });
   }, []);
 
-  // 2. Lógica de filtrado robusta
   const filteredMotels = motels.filter(motel => {
     const nameMatches = motel.name.toLowerCase().includes(filters.searchTerm.toLowerCase());
     const isOpen = !filters.showOpenOnly || motel.openNow === true;
@@ -71,11 +70,9 @@ function App() {
       return <MotelDetailView motel={selectedMotel} onBack={handleBack} />;
     }
     if (activeView === 'map') {
-      // Pasamos la lista ya filtrada al mapa
       return <MapComponent motels={filteredMotels} onMotelSelect={handleSelectMotel} />;
     }
     if (activeView === 'list') {
-      // Pasamos la lista filtrada y los filtros al componente de lista
       return (
         <MotelListComponent
           motels={filteredMotels}
