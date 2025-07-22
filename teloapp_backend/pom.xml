@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.teloapp</groupId>
-	<artifactId>teloapp-backend</artifactId>
+	<artifactId>teloapp_backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>teloapp-backend</name>
+	<name>teloapp_backend</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
