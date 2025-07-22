@@ -1,4 +1,4 @@
-package com.teloapp.teloapp_backend.config;
+package com.teloapp.teloappbackend.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -9,10 +9,14 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/**") // Aplica a todas las rutas bajo /api/
-                .allowedOrigins("http://localhost:5173") // Permite el origen de tu frontend
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Permite estos métodos HTTP
-                .allowedHeaders("*") // Permite todas las cabeceras
+        registry.addMapping("/api/**")
+                // CAMBIO CLAVE: Ahora permitimos dos orígenes
+                .allowedOrigins(
+                    "http://localhost:5173", // Para desarrollo en tu PC
+                    "https://telo-app-deployment.vercel.app" // La URL de tu app en Vercel
+                ) 
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
                 .allowCredentials(true);
     }
 }
