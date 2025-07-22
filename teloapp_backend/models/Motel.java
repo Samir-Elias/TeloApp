@@ -26,13 +26,4 @@ public class Motel {
 
     private boolean verified = false;
 
-    // --- AGREGA ESTA LÍNEA AQUÍ ---
-    private boolean openNow;
-
-    // --- (Opcional) Si quieres añadir los otros campos que usamos en el frontend ---
-     private Double rating;
-     private Integer reviewsCount;
-     private String priceRange;
-     @ElementCollection // Para una lista de strings simples
-     private List<String> services;
 }
