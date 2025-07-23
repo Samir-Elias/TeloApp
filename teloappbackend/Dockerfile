@@ -1,7 +1,6 @@
 # --------------- STAGE 1: Build la aplicación Spring Boot ---------------
-FROM openjdk:17-jdk-slim as builder # cache-bust-v1.0.0 # <-- AÑADE ESTE COMENTARIO AL FINAL DE LA LÍNEA
-                                    # Puedes cambiar 'cache-bust-v1.0.0' a algo como 'cache-bust-v2.0.0'
-                                    # cada vez que necesites forzar una reconstrucción completa.
+# cache-bust-v1.0.0 # <-- MUEVE ESTE COMENTARIO A SU PROPIA LÍNEA
+FROM openjdk:17-jdk-slim as builder
 
 # Instalar herramientas necesarias para descargar y descomprimir Maven
 RUN apt-get update && \
