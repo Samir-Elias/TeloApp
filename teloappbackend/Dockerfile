@@ -32,8 +32,6 @@ RUN mvn clean install -DskipTests
 # --------------- STAGE 2: Crea la imagen final ligera ---------------
 FROM openjdk:17-jdk-slim
 
-# Crea un volumen para los logs (opcional, pero buena práctica)
-VOLUME /tmp
 
 # Copia el JAR compilado desde la etapa 'builder'
 # Asegúrate de que el nombre del JAR coincida con el artifactId en tu pom.xml
