@@ -13,4 +13,4 @@ COPY ${JAR_FILE} app.jar
 
 # Define el punto de entrada para ejecutar la aplicación
 # La opción --spring.profiles.active=production es una buena práctica para entornos de despliegue
-ENTRYPOINT ["java","-jar","/app.jar", "--spring.profiles.active=production"]git status
+ENTRYPOINT ["java","-jar","/app.jar", "--spring.profiles.active=production"]
