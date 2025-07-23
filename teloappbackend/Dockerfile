@@ -1,13 +1,16 @@
 # --------------- STAGE 1: Build la aplicación Spring Boot ---------------
-FROM openjdk:17-jdk-slim as builder
+FROM openjdk:17-jdk-slim as builder # cache-bust-v1.0.0 # <-- AÑADE ESTE COMENTARIO AL FINAL DE LA LÍNEA
+                                    # Puedes cambiar 'cache-bust-v1.0.0' a algo como 'cache-bust-v2.0.0'
+                                    # cada vez que necesites forzar una reconstrucción completa.
 
 # Instalar herramientas necesarias para descargar y descomprimir Maven
 RUN apt-get update && \
     apt-get install -y wget unzip && \
     rm -rf /var/lib/apt/lists/*
 
+# ... (el resto de tu Dockerfile permanece EXACTAMENTE igual) ...
+
 # Descargar y configurar Maven
-# Asegúrate de que esta sea la versión y la URL exactas.
 ARG MAVEN_VERSION=3.9.11
 ARG MASH_URL=https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.zip
 
