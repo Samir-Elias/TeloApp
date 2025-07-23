@@ -1,0 +1,19 @@
+package com.teloapp.teloapp_backend.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+public class CorsConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**") // Aplica la configuración CORS a todas las rutas
+                .allowedOrigins("http://localhost:5173", // Origen de tu frontend de desarrollo
+                                "https://teloapp-react-kbp21dzsd-samir-elias-projects.vercel.app") // Origen de tu frontend desplegado
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Métodos HTTP permitidos
+                .allowedHeaders("*") // Cabeceras permitidas
+                .allowCredentials(true); // Permite el envío de cookies/credenciales (importante para autenticación)
+    }
+}
