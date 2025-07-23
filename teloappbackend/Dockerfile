@@ -42,4 +42,4 @@ COPY --from=builder /app/${JAR_FILE} app.jar
 
 # Define el punto de entrada para ejecutar la aplicación
 # Usamos el modo estándar 'java -jar' ya que sabemos que funciona localmente
-ENTRYPOINT ["java", "-jar", "app.jar", "--spring.profiles.active=production"]
+ENTRYPOINT ["java", "-jar", "app.jar", "--spring.profiles.active=production"] 
