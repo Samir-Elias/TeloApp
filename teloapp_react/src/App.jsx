@@ -36,13 +36,15 @@ function App() {
   });
 
   useEffect(() => {
+    // --- INICIO DE LA SECCIÓN COMENTADA PARA PAUSAR LA CARGA DE MOTELES ---
     // La llamada a la API ahora usa la URL dinámica
-    axios.get(`${API_BASE_URL}/api/motels`)
-      .then(response => setMotels(response.data))
-      .catch(error => {
-        console.error('Error al obtener los datos de moteles:', error);
-        alert("Error al cargar los moteles. Asegúrate de que el backend esté corriendo en localhost:8080 y revisa la consola.");
-      });
+    // axios.get(`${API_BASE_URL}/api/motels`)
+    //   .then(response => setMotels(response.data))
+    //   .catch(error => {
+    //     console.error('Error al obtener los datos de moteles:', error);
+    //     alert("Error al cargar los moteles. Asegúrate de que el backend esté corriendo en localhost:8080 y revisa la consola.");
+    //   });
+    // --- FIN DE LA SECCIÓN COMENTADA ---
   }, []);
 
   const filteredMotels = motels.filter(motel => {
