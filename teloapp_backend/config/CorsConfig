@@ -9,11 +9,13 @@ public class CorsConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**") // Aplica la configuración CORS a todas las rutas
-                .allowedOrigins("http://localhost:5173", // Origen de tu frontend de desarrollo
-                                "https://teloapp-react-kbp21dzsd-samir-elias-projects.vercel.app") // Origen de tu frontend desplegado
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Métodos HTTP permitidos
-                .allowedHeaders("*") // Cabeceras permitidas
-                .allowCredentials(true); // Permite el envío de cookies/credenciales (importante para autenticación)
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:5173", // Tu frontend de desarrollo
+                                "https://teloapp-react-kbp21dzsd-samir-elias-projects.vercel.app", // Tu dominio principal de Vercel (si lo tienes configurado)
+                                "https://teloappreact-d71ewx86k-samir-elias-projects.vercel.app" // <-- ¡ESTA ES LA URL ACTUAL QUE NECESITAS AÑADIR!
+                                )
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(true);
     }
 }
