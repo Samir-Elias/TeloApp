@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-slim
 VOLUME /tmp
 
 # Copia el archivo JAR de tu aplicación (asegúrate de que el nombre del JAR coincida con el que genera tu build)
-ARG JAR_FILE=target/teloapp-backend-0.0.1-SNAPSHOT.jar 
+ARG JAR_FILE=target/teloappbackend-0.0.1-SNAPSHOT.jar  # <-- ¡CAMBIAR AQUÍ: SIN GUION BAJO!
 
 # Añade tu JAR al contenedor
 COPY ${JAR_FILE} app.jar
