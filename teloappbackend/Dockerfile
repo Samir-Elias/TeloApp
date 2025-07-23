@@ -1,15 +1,16 @@
 # --------------- STAGE 1: Build la aplicación Spring Boot ---------------
 FROM openjdk:17-jdk-slim as builder
 
-# Instalar Maven
-# Algunas dependencias para wget y descompresión
+# Instalar herramientas necesarias para descargar y descomprimir Maven
 RUN apt-get update && \
     apt-get install -y wget unzip && \
     rm -rf /var/lib/apt/lists/*
 
 # Descargar y configurar Maven
-ARG MAVEN_VERSION=3.9.8 # Puedes usar la última versión estable de Maven
-ARG MASH_URL=https://dlcdn.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.zip
+# Asegúrate de que esta sea la versión y la URL exactas.
+# Verifica en https://maven.apache.org/download.cgi si hay una versión más reciente o un enlace diferente.
+ARG MAVEN_VERSION=3.9.11
+ARG MASH_URL=https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.zip
 
 RUN wget ${MASH_URL} -O /tmp/maven.zip && \
     unzip /tmp/maven.zip -d /opt/ && \
@@ -17,7 +18,6 @@ RUN wget ${MASH_URL} -O /tmp/maven.zip && \
 
 ENV M2_HOME /opt/apache-maven-${MAVEN_VERSION}
 ENV PATH ${M2_HOME}/bin:${PATH}
-
 
 # Define el directorio de trabajo dentro del contenedor
 WORKDIR /app
@@ -36,7 +36,8 @@ FROM openjdk:17-jdk-slim
 VOLUME /tmp
 
 # Copia el JAR compilado desde la etapa 'builder'
-ARG JAR_FILE=target/teloappbackend-0.0.1-SNAPSHOT.jar # Debería ser teloappbackend ahora
+# Asegúrate de que el nombre del JAR coincida con el artifactId en tu pom.xml
+ARG JAR_FILE=target/teloappbackend-0.0.1-SNAPSHOT.jar 
 COPY --from=builder /app/${JAR_FILE} app.jar
 
 # Define el punto de entrada para ejecutar la aplicación
