@@ -1,5 +1,5 @@
 # Etapa 1: Build de la aplicación
-FROM maven:3.9.4-openjdk-17-slim AS builder
+FROM maven:3-openjdk-17-slim AS builder
 
 # Instalar wget para descargar dependencias si es necesario
 RUN apt-get update && apt-get install -y wget && rm -rf /var/lib/apt/lists/*
@@ -18,7 +18,8 @@ RUN mvn dependency:go-offline -B
 RUN mvn clean package -DskipTests -B
 
 # Etapa 2: Imagen de ejecución
-FROM maven:3-openjdk-17-slim AS builder
+FROM openjdk:17-jdk-slim
+
 # Crear usuario no root para seguridad
 RUN addgroup --system spring && adduser --system spring --ingroup spring
 
