@@ -1,42 +1,344 @@
+/* Reset y estilos base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 /* Contenedor principal de la aplicación */
 .app-container {
-  display: flex; /* Activa Flexbox */
+  display: flex;
   width: 100vw;
   height: 100vh;
-  font-family: sans-serif;
+  font-family: inherit;
+}
+
+/* Estados de carga */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e3e3e3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+.loading-spinner.small {
+  width: 24px;
+  height: 24px;
+  border-width: 3px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* Barra lateral */
 .sidebar {
-  width: 350px; /* Ancho fijo para la barra lateral */
-  padding: 1rem;
-  overflow-y: auto; /* Permite scroll si la lista es muy larga */
-  border-right: 1px solid #ccc;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  width: 380px;
+  background-color: #ffffff;
+  border-right: 1px solid #e1e5e9;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-.sidebar h2 {
-  margin-top: 0;
+.sidebar-header {
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid #e1e5e9;
+  background-color: #f8f9fa;
 }
 
-.sidebar ul {
-  list-style-type: none;
-  padding: 0;
+.sidebar-header h2 {
+  color: #2c3e50;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
 }
 
-.sidebar li {
-  padding: 0.8rem;
-  border-radius: 5px;
+.subtitle {
+  color: #6c757d;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+/* Contenedor de búsqueda */
+.search-container {
+  position: relative;
+  padding: 1rem 1.5rem;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e1e5e9;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  background-color: #f8f9fa;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #3498db;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.search-input::placeholder {
+  color: #6c757d;
+}
+
+.clear-search-btn {
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #6c757d;
   cursor: pointer;
-  margin-bottom: 0.5rem;
-  border: 1px solid #eee;
+  padding: 0.25rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.sidebar li:hover {
-  background-color: #f0f0f0;
+.clear-search-btn:hover {
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+/* Información de resultados */
+.results-info {
+  padding: 0.75rem 1.5rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e1e5e9;
+}
+
+.results-count {
+  font-size: 0.85rem;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+/* Estados de carga y error en sidebar */
+.loading-state,
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+
+.error-message {
+  color: #dc3545;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.retry-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.retry-btn:hover {
+  background-color: #2980b9;
+}
+
+/* Lista de moteles */
+.motels-list {
+  flex: 1;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.motel-item {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #e1e5e9;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #ffffff;
+}
+
+.motel-item:hover {
+  background-color: #f8f9fa;
+}
+
+.motel-item.selected {
+  background-color: #e3f2fd;
+  border-left: 4px solid #3498db;
+}
+
+.motel-item:last-child {
+  border-bottom: none;
+}
+
+.motel-info {
+  width: 100%;
+}
+
+.motel-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.motel-address {
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.motel-phone {
+  color: #495057;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.motel-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.stars {
+  color: #ffc107;
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+.rating-value {
+  color: #6c757d;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.no-results {
+  padding: 2rem 1.5rem;
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
 }
 
 /* Contenedor del mapa */
 .map-container {
-  flex-grow: 1; /* El mapa ocupa todo el espacio restante */
-} 
+  flex: 1;
+  position: relative;
+}
+
+/* Estilos para InfoWindow */
+.info-window {
+  max-width: 250px;
+  padding: 0.5rem 0;
+}
+
+.info-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.info-address {
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.info-phone {
+  color: #495057;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.info-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    max-height: 40vh;
+    border-right: none;
+    border-bottom: 1px solid #e1e5e9;
+  }
+  
+  .map-container {
+    height: 60vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    max-height: 50vh;
+  }
+  
+  .map-container {
+    height: 50vh;
+  }
+  
+  .sidebar-header {
+    padding: 1rem;
+  }
+  
+  .search-container {
+    padding: 0.75rem 1rem;
+  }
+  
+  .motel-item {
+    padding: 1rem;
+  }
+}

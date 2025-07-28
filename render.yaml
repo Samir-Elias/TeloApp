@@ -1,17 +1,55 @@
 databases:
   - name: teloapp-db
     plan: free
+    databaseName: teloapp
+    user: teloapp_user
 
 services:
   - type: web
     name: teloapp-backend
-    plan: free
     runtime: docker
-    dockerfilePath: ./Dockerfile # <--- CAMBIO CLAVE
+    plan: free
+    dockerfilePath: ./teloappbackend/Dockerfile
+    dockerContext: ./teloappbackend
+    
+    # Variables de entorno
     envVars:
-      - key: SPRING_DATASOURCE_URL
+      - key: DATABASE_URL
         fromDatabase:
           name: teloapp-db
           property: connectionString
+      
+      - key: PGUSER
+        fromDatabase:
+          name: teloapp-db
+          property: user
+      
+      - key: PGPASSWORD
+        fromDatabase:
+          name: teloapp-db
+          property: password
+      
       - key: SPRING_JPA_HIBERNATE_DDL_AUTO
         value: update
+      
+      - key: SPRING_PROFILES_ACTIVE
+        value: production
+      
+      - key: SHOW_SQL
+        value: "false"
+        
+      # Variables OAuth2 (configurar en Render Dashboard)
+      - key: GOOGLE_CLIENT_ID
+        sync: false  # Configurar manualmente en el dashboard
+      
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false  # Configurar manualmente en el dashboard
+    
+    # Configuración de health check
+    healthCheckPath: /actuator/health
+    
+    # Comandos de construcción (si es necesario)
+    buildCommand: echo "Using Dockerfile for build"
+    
+    # Puerto (Render lo asigna automáticamente)
+    # port: 8080  # No necesario, Render usa PORT env var

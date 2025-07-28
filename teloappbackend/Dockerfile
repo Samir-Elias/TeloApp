@@ -1,45 +1,50 @@
-# --------------- STAGE 1: Build la aplicación Spring Boot ---------------
-# cache-bust-v1.0.0 # <-- MUEVE ESTE COMENTARIO A SU PROPIA LÍNEA
-FROM openjdk:17-jdk-slim as builder
+# Etapa 1: Build de la aplicación
+FROM maven:3.9.4-openjdk-17-slim AS builder
 
-# Instalar herramientas necesarias para descargar y descomprimir Maven
-RUN apt-get update && \
-    apt-get install -y wget unzip && \
-    rm -rf /var/lib/apt/lists/*
+# Instalar wget para descargar dependencias si es necesario
+RUN apt-get update && apt-get install -y wget && rm -rf /var/lib/apt/lists/*
 
-# ... (el resto de tu Dockerfile permanece EXACTAMENTE igual) ...
-
-# Descargar y configurar Maven
-ARG MAVEN_VERSION=3.9.11
-ARG MASH_URL=https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.zip
-
-RUN wget ${MASH_URL} -O /tmp/maven.zip && \
-    unzip /tmp/maven.zip -d /opt/ && \
-    rm /tmp/maven.zip
-
-ENV M2_HOME /opt/apache-maven-${MAVEN_VERSION}
-ENV PATH ${M2_HOME}/bin:${PATH}
-
-# Define el directorio de trabajo dentro del contenedor para la compilación
+# Establecer directorio de trabajo
 WORKDIR /app
 
-# Copia los archivos del proyecto Maven (pom.xml y src)
+# Copiar archivos de configuración de Maven
 COPY pom.xml .
 COPY src ./src
 
-# Ejecuta el build de Maven. -DskipTests para omitir las pruebas.
-RUN mvn clean install -DskipTests
+# Descargar dependencias (esto se cachea si no cambia pom.xml)
+RUN mvn dependency:go-offline -B
 
-# --------------- STAGE 2: Crea la imagen final ligera ---------------
+# Compilar la aplicación
+RUN mvn clean package -DskipTests -B
+
+# Etapa 2: Imagen de ejecución
 FROM openjdk:17-jdk-slim
 
-# Crea un volumen para los logs (opcional, pero buena práctica)
-# VOLUME /tmp # Asegúrate de que esta línea esté comentada o eliminada
+# Crear usuario no root para seguridad
+RUN addgroup --system spring && adduser --system spring --ingroup spring
 
-# Copia el JAR compilado desde la etapa 'builder'
-ARG JAR_FILE=target/teloappbackend-0.0.1-SNAPSHOT.jar 
-COPY --from=builder /app/${JAR_FILE} app.jar
+# Establecer directorio de trabajo
+WORKDIR /app
 
-# Define el punto de entrada para ejecutar la aplicación
-# Usamos el modo estándar 'java -jar' ya que sabemos que funciona localmente
-ENTRYPOINT ["java", "-jar", "app.jar", "--spring.profiles.active=production"] 
+# Copiar el JAR construido desde la etapa anterior
+COPY --from=builder /app/target/teloappbackend-0.0.1-SNAPSHOT.jar app.jar
+
+# Cambiar propietario del archivo
+RUN chown spring:spring app.jar
+
+# Cambiar a usuario no root
+USER spring:spring
+
+# Exponer puerto
+EXPOSE 8080
+
+# Variables de entorno por defecto
+ENV JAVA_OPTS="-Xmx512m -Xms256m"
+ENV SPRING_PROFILES_ACTIVE=production
+
+# Healthcheck
+HEALTHCHECK --interval=30s --timeout=3s --start-period=30s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:8080/actuator/health || exit 1
+
+# Punto de entrada
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
