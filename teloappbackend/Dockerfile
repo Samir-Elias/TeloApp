@@ -18,8 +18,7 @@ RUN mvn dependency:go-offline -B
 RUN mvn clean package -DskipTests -B
 
 # Etapa 2: Imagen de ejecución
-FROM openjdk:17-jdk-slim
-
+FROM maven:3-openjdk-17-slim AS builder
 # Crear usuario no root para seguridad
 RUN addgroup --system spring && adduser --system spring --ingroup spring
 
